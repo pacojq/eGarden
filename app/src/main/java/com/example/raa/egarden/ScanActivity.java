@@ -5,25 +5,23 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-
-import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
-    CameraSource cameraSource;
-    BarcodeDetector barcodeDetector;
+    TextView textQRResult;
 
-    private SurfaceHolder failedHolder;
+    private QRManager qrManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,39 +32,22 @@ public class ScanActivity extends AppCompatActivity {
             requestPermission();
 
         this.surfaceView = findViewById(R.id.surfaceView);
-        ViewGroup.LayoutParams svLayout = this.surfaceView.getLayoutParams();
+        this.qrManager = new QRManager(this, this.surfaceView);
 
-        this.barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
-        this.cameraSource = new CameraSource.Builder(this, barcodeDetector)
-                .setRequestedPreviewSize(svLayout.width, svLayout.height)
-                .build();
+        this.textQRResult = findViewById(R.id.textQRResult);
+    }
 
-        this.surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+
+
+    public void onQRRead(final Barcode qr) {
+
+        this.textQRResult.post(new Runnable() {
             @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                if (!hasPermission()) {
-                    failedHolder = holder;
-                    return;
-                }
-
-                try {
-                    cameraSource.start(holder);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
+            public void run() {
+                Vibrator vib = (Vibrator) getApplicationContext()
+                        .getSystemService(Context.VIBRATOR_SERVICE);
+                vib.vibrate((long) 500);
+                textQRResult.setText(qr.displayValue);
             }
         });
     }
@@ -78,19 +59,13 @@ public class ScanActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-    private boolean hasPermission() {
+    public boolean hasPermission() {
         return ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void requestPermission() {
+    public void requestPermission() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.CAMERA},
                 0);
@@ -102,16 +77,9 @@ public class ScanActivity extends AppCompatActivity {
         if (requestCode != 0)
             return;
 
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (failedHolder != null) {
-                try {
-                    cameraSource.start(failedHolder);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-                failedHolder = null;
-            }
-        }
+        boolean granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        this.qrManager.onRequestPermissionsResult(granted);
     }
+
+
 }
