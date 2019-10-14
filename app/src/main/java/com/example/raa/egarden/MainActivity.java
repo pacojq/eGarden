@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             str.append(currentSensor.getName()).append(
                     System.getProperty("line.separator"));
 
-            if (currentSensor.getType() == Sensor.TYPE_PRESSURE)
-                Log.d("Logger", "BAROMETRO!!!!!");
+            if (currentSensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
+                Log.d("Logger", "HUMEDAD!!!!!");
         }
 
         TextView available = findViewById(R.id.textAvailable);

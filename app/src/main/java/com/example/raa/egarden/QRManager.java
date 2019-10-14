@@ -98,8 +98,6 @@ public class QRManager {
 
 
 
-
-
     public void onRequestPermissionsResult(boolean granted) {
         if (!granted)
             return;
