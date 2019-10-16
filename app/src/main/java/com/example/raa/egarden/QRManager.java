@@ -1,9 +1,15 @@
 package com.example.raa.egarden;
 
+import android.graphics.Rect;
+import android.hardware.Camera;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -11,6 +17,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class QRManager {
 
@@ -34,8 +42,10 @@ public class QRManager {
         this.barcodeDetector = new BarcodeDetector.Builder(this.scanActivity)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
+
         this.cameraSource = new CameraSource.Builder(this.scanActivity, barcodeDetector)
                 .setRequestedPreviewSize(svLayout.width, svLayout.height)
+                .setAutoFocusEnabled(true)
                 .build();
 
 
@@ -67,6 +77,7 @@ public class QRManager {
         });
 
 
+
         this.barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -94,7 +105,6 @@ public class QRManager {
 
 
     }
-
 
 
 
