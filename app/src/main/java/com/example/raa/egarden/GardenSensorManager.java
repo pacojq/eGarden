@@ -31,9 +31,6 @@ public class GardenSensorManager<T extends AppCompatActivity, GardenSensorListen
         for	(Sensor	currentSensor : sensorList) {
             str.append(currentSensor.getName())
                .append(System.getProperty("line.separator"));
-
-            if (currentSensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
-                Log.d("Logger", "HUMEDAD!!!!!");
         }
 
         Log.d("Logger", "AVAILABLE SENSORS: " + str.toString());

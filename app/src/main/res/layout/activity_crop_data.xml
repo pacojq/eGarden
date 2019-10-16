@@ -84,6 +84,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp"
+                        android:max="400"
                         android:progressTint="#FFEB3B"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +92,7 @@
 
                     <TextView
                         android:id="@+id/textLuminosity"
-                        android:layout_width="101dp"
+                        android:layout_width="192dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="13dp"
                         android:text="0%"
@@ -100,6 +101,18 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/progressLuminosity"
                         app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imgLuminosity"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="19dp"
+                        app:layout_constraintBottom_toTopOf="@+id/progressLuminosity"
+                        app:layout_constraintStart_toEndOf="@+id/textLuminosityTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cross_24dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -113,6 +126,17 @@
                     android:id="@+id/layoutTemperature"
                     android:layout_width="match_parent"
                     android:layout_height="128dp">
+
+                    <ImageView
+                        android:id="@+id/imgTemperature"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textTemperatureMinMax"
+                        app:layout_constraintStart_toEndOf="@+id/textTemperatureTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cross_24dp" />
 
                     <TextView
                         android:id="@+id/textTemperatureTitle"
@@ -144,6 +168,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp"
+                        android:max="50"
                         android:progressTint="#FFEB3B"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +176,7 @@
 
                     <TextView
                         android:id="@+id/textTemperature"
-                        android:layout_width="101dp"
+                        android:layout_width="192dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="13dp"
                         android:text="0%"
@@ -173,6 +198,17 @@
                     android:id="@+id/layoutHumidity"
                     android:layout_width="match_parent"
                     android:layout_height="128dp">
+
+                    <ImageView
+                        android:id="@+id/imgHumidity"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textHumidityMinMax"
+                        app:layout_constraintStart_toEndOf="@+id/textHumidityTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cross_24dp" />
 
                     <TextView
                         android:id="@+id/textHumidityTitle"
@@ -204,6 +240,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp"
+                        android:max="100"
                         android:progressTint="#FFEB3B"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +248,7 @@
 
                     <TextView
                         android:id="@+id/textHumidity"
-                        android:layout_width="101dp"
+                        android:layout_width="192dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="13dp"
                         android:text="0%"

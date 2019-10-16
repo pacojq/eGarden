@@ -1,28 +1,25 @@
 package com.example.raa.egarden;
 
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.graphics.Color;
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GardenSensorListener {
 
 
     private FloatingActionButton fabScan;
-    private TextView textValueTemperature;
+
+    private TextView textTemperature;
+    private TextView textHumidity;
+    private TextView textLuminosity;
 
 
     private GardenSensorManager sensors;
@@ -42,9 +39,20 @@ public class MainActivity extends AppCompatActivity implements GardenSensorListe
             }
         });
 
-        this.sensors = new GardenSensorManager(this);
 
-        this.textValueTemperature = findViewById(R.id.textValueTemperature);
+        this.textTemperature = findViewById(R.id.textTemperature);
+        this.textTemperature.setTextColor(Color.RED);
+        this.textTemperature.setText("-");
+
+        this.textHumidity = findViewById(R.id.textHumidity);
+        this.textHumidity.setTextColor(Color.RED);
+        this.textHumidity.setText("-");
+
+        this.textLuminosity = findViewById(R.id.textLuminosity);
+        this.textLuminosity.setTextColor(Color.RED);
+        this.textLuminosity.setText("-");
+
+        this.sensors = new GardenSensorManager(this);
     }
 
 
@@ -66,15 +74,22 @@ public class MainActivity extends AppCompatActivity implements GardenSensorListe
     @Override
     public void onTemperatureChange(float temperature) {
 
+        float celsius = temperature - 273;
+        this.textTemperature.setTextColor(Color.DKGRAY);
+        this.textTemperature.setText("" + celsius + "ºC");
     }
 
     @Override
     public void onLightChange(float light) {
 
+        this.textLuminosity.setTextColor(Color.DKGRAY);
+        this.textLuminosity.setText("" + light);
     }
 
     @Override
     public void onHumidityChange(float humidity) {
 
+        this.textHumidity.setTextColor(Color.DKGRAY);
+        this.textHumidity.setText("" + humidity + "%");
     }
 }
