@@ -25,18 +25,18 @@ public class GardenSensorManager<T extends AppCompatActivity, GardenSensorListen
         this.sensorManager = (SensorManager) activity.getSystemService(activity.SENSOR_SERVICE);
         List<Sensor> sensorList	= sensorManager.getSensorList(Sensor.TYPE_ALL);
 
+
         StringBuilder str = new StringBuilder();
 
-        for	(Sensor	currentSensor	:	sensorList )	{
-            str.append(currentSensor.getName()).append(
-                    System.getProperty("line.separator"));
+        for	(Sensor	currentSensor : sensorList) {
+            str.append(currentSensor.getName())
+               .append(System.getProperty("line.separator"));
 
             if (currentSensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
                 Log.d("Logger", "HUMEDAD!!!!!");
         }
 
         Log.d("Logger", "AVAILABLE SENSORS: " + str.toString());
-
     }
 
 
@@ -61,66 +61,35 @@ public class GardenSensorManager<T extends AppCompatActivity, GardenSensorListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+        float[] values = event.values;
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < values.length; i ++) {
+            str.append(values[i]);
+            str.append(" ");
+        }
+
         switch (event.sensor.getType()) {
 
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                onTemperatureChanged(event);
+                System.out.println("TEMP: " + str.toString());
+
+                // v v    WTF Java are you kidding me      v v
+                ((com.example.raa.egarden.GardenSensorListener) activity).onTemperatureChange(values[0]);
                 break;
 
             case Sensor.TYPE_LIGHT:
-                onLightChanged(event);
+                System.out.println("LIGHT: " + str.toString());
+                ((com.example.raa.egarden.GardenSensorListener) activity).onLightChange(values[0]);
                 break;
 
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                onHumidityChanged(event);
+                System.out.println("HUMIDITY: " + str.toString());
+                ((com.example.raa.egarden.GardenSensorListener) activity).onHumidityChange(values[0]);
                 break;
         }
     }
 
-    private void onTemperatureChanged(SensorEvent event) {
-
-        float[] values = event.values;
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < values.length; i ++) {
-            str.append(values[i]);
-            str.append(" ");
-        }
-        Log.d("Logger", str.toString());
-        System.out.println("TEMP: " + str.toString());
-
-        // v v    WTF Java are you kidding me      v v
-        ((com.example.raa.egarden.GardenSensorListener) activity).onTemperatureChange(values[0]);
-    }
-
-    private void onLightChanged(SensorEvent event) {
-
-        float[] values = event.values;
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < values.length; i ++) {
-            str.append(values[i]);
-            str.append(" ");
-        }
-        Log.d("Logger", str.toString());
-        System.out.println("LIGHT: " + str.toString());
-
-        // v v    WTF Java are you kidding me      v v
-        ((com.example.raa.egarden.GardenSensorListener) activity).onLightChange(values[0]);
-    }
-
-    private void onHumidityChanged(SensorEvent event) {
-
-        float[] values = event.values;
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < values.length; i ++) {
-            str.append(values[i]);
-            str.append(" ");
-        }
-        Log.d("Logger", str.toString());
-        System.out.println("HUMIDITY: " + str.toString());
-
-        // v v    WTF Java are you kidding me      v v
-        ((com.example.raa.egarden.GardenSensorListener) activity).onHumidityChange(values[0]);
-    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
