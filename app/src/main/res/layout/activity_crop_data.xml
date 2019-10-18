@@ -84,7 +84,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp"
-                        android:max="400"
+                        android:max="300"
                         android:progressTint="#FFEB3B"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
