@@ -1,16 +1,19 @@
 package com.example.raa.egarden;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -21,8 +24,10 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 public class ScanActivity extends AppCompatActivity {
 
-    SurfaceView surfaceView;
-    TextView textQRResult;
+    private SurfaceView surfaceView;
+    private TextView textQRResult;
+
+    private MediaPlayer mediaPlayer;
 
     private QRManager qrManager;
     private Intent cropDataIntent;
@@ -32,13 +37,35 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         if (!hasPermission())
             requestPermission();
+
+        this.mediaPlayer = MediaPlayer.create(this, R.raw.coin_sound);
 
         this.surfaceView = findViewById(R.id.surfaceView);
         this.qrManager = new QRManager(this, this.surfaceView);
 
         this.textQRResult = findViewById(R.id.textQRResult);
+        this.textQRResult.setText(R.string.scan_start);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(ScanActivity.this, MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
+
+    private void getAudioReady() {
+        try {
+            mediaPlayer.prepare();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -57,13 +84,14 @@ public class ScanActivity extends AppCompatActivity {
                     Crop crop = Crop.FromString(qr.displayValue);
                 }
                 catch (Exception e) {
-                    textQRResult.setText("This is not a eGarden QR code.");
+                    textQRResult.setText(R.string.scan_error);
                     textQRResult.setTextColor(Color.RED);
                     return;
                 }
 
                 textQRResult.setTextColor(Color.GREEN);
-                textQRResult.setText("Valid QR!");
+                textQRResult.setText(R.string.scan_success);
+                mediaPlayer.start();
 
                 cropDataIntent = new Intent(ScanActivity.this, CropDataActivity.class);
                 cropDataIntent.putExtra("serialized",	qr.displayValue);

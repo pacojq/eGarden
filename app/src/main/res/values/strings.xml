@@ -3,4 +3,26 @@
     <string name="title_home">Home</string>
     <string name="title_scan">Scan</string>
     <string name="title_info">Info</string>
+
+    <string name="temperature">Temperatura</string>
+    <string name="luminosity">Luz</string>
+    <string name="humidity">Humedad</string>
+
+    <string name="title_sensors">Sensores</string>
+    <string name="tip_scan">Escanear</string>
+    <string name="tip_tutorials">Tutoriales</string>
+
+    <string name="video_automation">Domótica</string>
+    <string name="video_wildlife">Wildlife Friendly</string>
+    <string name="video_compost">Compost</string>
+
+    <string name="scan_start">Apunte a un código QR</string>
+    <string name="scan_success">¡QR válido!</string>
+    <string name="scan_error">Este no es un QR de eGarden</string>
+
+    <string name="scanned_crop">Cultivo escaneado:</string>
+    <string name="sensor_values">Datos de sensores:</string>
+
+    <string name="ideal_range">Rango ideal:</string>
+
 </resources>

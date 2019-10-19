@@ -69,19 +69,19 @@ public class GardenSensorManager<T extends AppCompatActivity, GardenSensorListen
         switch (event.sensor.getType()) {
 
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                System.out.println("TEMP: " + str.toString());
+                //System.out.println("TEMP: " + str.toString());
 
                 // v v    WTF Java are you kidding me      v v
                 ((com.example.raa.egarden.GardenSensorListener) activity).onTemperatureChange(values[0]);
                 break;
 
             case Sensor.TYPE_LIGHT:
-                System.out.println("LIGHT: " + str.toString());
+                //System.out.println("LIGHT: " + str.toString());
                 ((com.example.raa.egarden.GardenSensorListener) activity).onLightChange(values[0]);
                 break;
 
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                System.out.println("HUMIDITY: " + str.toString());
+                //System.out.println("HUMIDITY: " + str.toString());
                 ((com.example.raa.egarden.GardenSensorListener) activity).onHumidityChange(values[0]);
                 break;
         }

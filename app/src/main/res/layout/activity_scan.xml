@@ -21,7 +21,7 @@
         android:id="@+id/textQRResult"
         android:layout_width="313dp"
         android:layout_height="24dp"
-        android:text="Please, target a QR code"
+        android:text="@string/scan_start"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

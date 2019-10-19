@@ -73,5 +73,4 @@ public class Crop {
         return this.humidityMax;
     }
 
-
 }

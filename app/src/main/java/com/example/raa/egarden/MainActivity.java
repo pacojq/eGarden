@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements GardenSensorListe
 
 
     private FloatingActionButton fabScan;
+    private FloatingActionButton fabTutorials;
 
     private TextView textTemperature;
     private TextView textHumidity;
@@ -35,6 +36,15 @@ public class MainActivity extends AppCompatActivity implements GardenSensorListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fabTutorials = findViewById(R.id.fabTutorials);
+        fabTutorials.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
                 startActivity(intent);
             }
         });
@@ -74,16 +84,15 @@ public class MainActivity extends AppCompatActivity implements GardenSensorListe
     @Override
     public void onTemperatureChange(float temperature) {
 
-        float celsius = temperature - 273;
         this.textTemperature.setTextColor(Color.DKGRAY);
-        this.textTemperature.setText("" + celsius + "ºC");
+        this.textTemperature.setText("" + temperature + "ºC");
     }
 
     @Override
     public void onLightChange(float light) {
 
         this.textLuminosity.setTextColor(Color.DKGRAY);
-        this.textLuminosity.setText("" + light);
+        this.textLuminosity.setText("" + light + " lx");
     }
 
     @Override

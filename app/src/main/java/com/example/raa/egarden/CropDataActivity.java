@@ -1,15 +1,14 @@
 package com.example.raa.egarden;
 
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.BlendMode;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,12 +42,22 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_data);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         Intent myIntent = getIntent();
         String serialized = myIntent.getStringExtra("serialized");
 
         setCrop(Crop.FromString(serialized));
 
         this.sensors = new GardenSensorManager(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(CropDataActivity.this, ScanActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
     @Override
@@ -71,13 +80,12 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
         this.cropName = findViewById(R.id.textCropName);
         this.cropName.setText(crop.getName());
 
-
         this.textTemperature = findViewById(R.id.textTemperature);
         this.textTemperature.setTextColor(Color.RED);
         this.textTemperature.setText("-");
 
         this.textTemperatureMinMax = findViewById(R.id.textTemperatureMinMax);
-        this.textTemperatureMinMax.setText(String.format("Ideal values: %sº - %sº",
+        this.textTemperatureMinMax.setText(String.format(R.string.ideal_range + " %sº - %sº",
                 crop.getTempMin(), crop.getTempMax()));
 
         this.progressTemperature = findViewById(R.id.progressTemperature);
@@ -89,7 +97,7 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
         this.textHumidity.setText("-");
 
         this.textHumidityMinMax = findViewById(R.id.textHumidityMinMax);
-        this.textHumidityMinMax.setText(String.format("Ideal values: %s - %s",
+        this.textHumidityMinMax.setText(String.format(R.string.ideal_range + " %s - %s",
                 "" + crop.getHumidityMin() + "%", "" + crop.getHumidityMax() + "%"));
 
         this.progressHumidity = findViewById(R.id.progressHumidity);
@@ -111,11 +119,10 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
     @Override
     public void onTemperatureChange(float temperature) {
 
-        float celsius = temperature - 273;
         this.textTemperature.setTextColor(Color.DKGRAY);
-        this.textTemperature.setText("" + celsius + "ºC");
+        this.textTemperature.setText("" + temperature + "ºC");
 
-        this.progressTemperature.setProgress((int) celsius);
+        this.progressTemperature.setProgress((int) temperature);
 
         if (temperature < this.crop.getTempMin() || temperature > this.crop.getTempMax()) {
 
@@ -144,7 +151,7 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
     public void onLightChange(float light) {
 
         this.textLuminosity.setTextColor(Color.DKGRAY);
-        this.textLuminosity.setText("" + light);
+        this.textLuminosity.setText("" + light + " lx");
 
         this.progressLuminosity.setProgress((int) light);
         float percent = light / this.progressLuminosity.getMax();
