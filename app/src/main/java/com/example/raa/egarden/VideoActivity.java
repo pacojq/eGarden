@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 public class VideoActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class VideoActivity extends AppCompatActivity {
     private Button btnWildlife;
     private Button btnCompost;
 
+    private TextView textVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class VideoActivity extends AppCompatActivity {
         String path = PATH + R.raw.domotica;
         this.videoView.setVideoPath(path);
 
+        this.textVideo = findViewById(R.id.textVideo);
+
         this.btnAutomation = findViewById(R.id.btnAutomation);
         this.btnAutomation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +51,8 @@ public class VideoActivity extends AppCompatActivity {
                     videoView.pause();
                 String path = PATH + R.raw.domotica;
                 videoView.setVideoPath(path);
+                textVideo.setText(String.format("%s %s",
+                        getString(R.string.video), getString(R.string.video_automation)));
             }
         });
 
@@ -58,6 +64,8 @@ public class VideoActivity extends AppCompatActivity {
                     videoView.pause();
                 String path = PATH + R.raw.wildlife_friendly;
                 videoView.setVideoPath(path);
+                textVideo.setText(String.format("%s %s",
+                        getString(R.string.video), getString(R.string.video_wildlife)));
             }
         });
 
@@ -69,6 +77,8 @@ public class VideoActivity extends AppCompatActivity {
                     videoView.pause();
                 String path = PATH + R.raw.compost;
                 videoView.setVideoPath(path);
+                textVideo.setText(String.format("%s %s",
+                        getString(R.string.video), getString(R.string.video_compost)));
             }
         });
     }

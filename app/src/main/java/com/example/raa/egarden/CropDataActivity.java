@@ -85,8 +85,8 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
         this.textTemperature.setText("-");
 
         this.textTemperatureMinMax = findViewById(R.id.textTemperatureMinMax);
-        this.textTemperatureMinMax.setText(String.format(R.string.ideal_range + " %sº - %sº",
-                crop.getTempMin(), crop.getTempMax()));
+        this.textTemperatureMinMax.setText(String.format("%s %sº - %sº",
+                getString(R.string.ideal_range), crop.getTempMin(), crop.getTempMax()));
 
         this.progressTemperature = findViewById(R.id.progressTemperature);
         this.imgTemperature = findViewById(R.id.imgTemperature);
@@ -97,8 +97,8 @@ public class CropDataActivity extends AppCompatActivity implements GardenSensorL
         this.textHumidity.setText("-");
 
         this.textHumidityMinMax = findViewById(R.id.textHumidityMinMax);
-        this.textHumidityMinMax.setText(String.format(R.string.ideal_range + " %s - %s",
-                "" + crop.getHumidityMin() + "%", "" + crop.getHumidityMax() + "%"));
+        this.textHumidityMinMax.setText(String.format("%s %s%s - %s%s",
+                getString(R.string.ideal_range), crop.getHumidityMin(), "%", crop.getHumidityMax(), "%"));
 
         this.progressHumidity = findViewById(R.id.progressHumidity);
         this.imgHumidity = findViewById(R.id.imgHumidity);

@@ -27,7 +27,8 @@ public class ScanActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private TextView textQRResult;
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayerCoin;
+    private MediaPlayer mediaPlayerIncorrect;
 
     private QRManager qrManager;
     private Intent cropDataIntent;
@@ -43,7 +44,8 @@ public class ScanActivity extends AppCompatActivity {
         if (!hasPermission())
             requestPermission();
 
-        this.mediaPlayer = MediaPlayer.create(this, R.raw.coin_sound);
+        this.mediaPlayerCoin = MediaPlayer.create(this, R.raw.coin_sound);
+        this.mediaPlayerIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
 
         this.surfaceView = findViewById(R.id.surfaceView);
         this.qrManager = new QRManager(this, this.surfaceView);
@@ -57,15 +59,6 @@ public class ScanActivity extends AppCompatActivity {
         Intent myIntent = new Intent(ScanActivity.this, MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
-    }
-
-    private void getAudioReady() {
-        try {
-            mediaPlayer.prepare();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -85,13 +78,14 @@ public class ScanActivity extends AppCompatActivity {
                 }
                 catch (Exception e) {
                     textQRResult.setText(R.string.scan_error);
-                    textQRResult.setTextColor(Color.RED);
+                    textQRResult.setTextColor(Color.YELLOW);
+                    mediaPlayerIncorrect.start();
                     return;
                 }
 
                 textQRResult.setTextColor(Color.GREEN);
                 textQRResult.setText(R.string.scan_success);
-                mediaPlayer.start();
+                mediaPlayerCoin.start();
 
                 cropDataIntent = new Intent(ScanActivity.this, CropDataActivity.class);
                 cropDataIntent.putExtra("serialized",	qr.displayValue);
